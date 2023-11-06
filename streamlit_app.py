@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+import openpyxl
 
 
 data = pd.read_excel('fashionsales.xlsx', engine='openpyxl')
