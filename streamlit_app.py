@@ -24,6 +24,10 @@ st.line_chart(time_series_data)
 
 
 # Filtrar los datos por mes
+
+
+data['Month'] = pd.to_datetime(data['Month'], format='%d/%m/%Y', errors='coerce').dt.strftime('%Y-%m')
+
 selected_month = st.selectbox('Seleccionar mes:', data['Month'].unique())
 filtered_data = data[data['Month'] == selected_month]
 
