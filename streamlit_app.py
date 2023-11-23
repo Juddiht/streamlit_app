@@ -14,6 +14,15 @@ st.title('Datos de Ventas de ropa en Australia')
 
 st.write('Este es un dashboard para analizar datos de ventas para la ayuda de toma de decisiones.')
 
+# Gráfico de líneas para las ventas a lo largo del tiempo
+
+
+st.subheader('Ventas a lo largo del tiempo')
+time_series_data = data.groupby('Month')['Sales'].sum()
+st.line_chart(time_series_data)
+
+
+
 # Filtrar los datos por mes
 selected_month = st.selectbox('Seleccionar mes:', data['Month'].unique())
 filtered_data = data[data['Month'] == selected_month]
@@ -37,10 +46,6 @@ st.subheader('Ventas por Manager')
 manager_sales = filtered_data.groupby('Manager')['Sales'].sum()
 st.bar_chart(manager_sales)
 
-# Gráfico de líneas para las ventas a lo largo del tiempo
-st.subheader('Ventas a lo largo del tiempo')
-time_series_data = data.groupby('Month')['Sales'].sum()
-st.line_chart(time_series_data)
 
 
 
