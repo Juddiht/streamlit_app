@@ -48,6 +48,9 @@ st.subheader(f'Ventas a lo largo del tiempo para {selected_month_time_series}')
 time_series_data = data.groupby(data['Month'].dt.to_period('M'))['Sales'].sum()
 st.line_chart(time_series_data)
 
+# Configurar formato de fecha para las etiquetas del eje x
+chart.x_axis_formatter(lambda x: x.strftime('%Y-%m'))
+
 # Selector de mes para la tabla de resumen
 selected_month_summary = st.selectbox('Seleccionar mes para Resumen de Ventas:', data['Month'].dt.to_period('M').unique())
 filtered_data_summary = data[data['Month'].dt.to_period('M') == selected_month_summary]
