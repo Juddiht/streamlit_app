@@ -3,67 +3,56 @@ import pandas as pd
 import openpyxl
 import plotly.express as px
 
-data = pd.read_excel('fashionsales.xlsx', engine='openpyxl')
+# Cargar los datos
+datos = pd.read_excel('fashionsales.xlsx', engine='openpyxl')
 
+# Icono y título
+icono_url = 'icono.jpg'
+st.image(icono_url, width=100)
+st.title('Reporte de Ventas de Ropa y Accesorios')
 
-
-
-icon_url = 'icono.jpg'  # Reemplaza 'URL_DEL_ICONO' con la URL de la imagen del icono
-st.image(icon_url, width=100) 
-st.title('Reporte de Ventas de Ropas y accesorios')
-
-st.write('Este es un dashboard para analizar datos de ventas para la ayuda de toma de decisiones.')
+# Descripción
+st.write('Este es un panel de control para analizar datos de ventas y facilitar la toma de decisiones.')
 
 # Gráfico de líneas para las ventas a lo largo del tiempo
-
-
 st.subheader('Ventas a lo largo del tiempo')
-time_series_data = data.groupby('Month')['Sales'].sum()
-st.line_chart(time_series_data)
-
-
+datos['Month'] = pd.to_datetime(datos['Month'], format='%d/%m/%Y', errors='coerce').dt.strftime('%Y-%m')
+serie_temporal_ventas = datos.groupby('Month')['Sales'].sum()
+st.line_chart(serie_temporal_ventas)
 
 # Filtrar los datos por mes
-
-
-data['Month'] = pd.to_datetime(data['Month'], format='%d/%m/%Y', errors='coerce').dt.strftime('%Y-%m')
-
-selected_month = st.selectbox('Seleccionar mes:', data['Month'].unique())
-filtered_data = data[data['Month'] == selected_month]
+mes_seleccionado = st.selectbox('Seleccionar mes:', datos['Month'].unique())
+datos_filtrados = datos[datos['Month'] == mes_seleccionado]
 
 # Mostrar los datos filtrados
-st.write(f'Datos para el mes seleccionado: {selected_month}')
-st.write(filtered_data)
+st.write(f'Datos para el mes seleccionado: {mes_seleccionado}')
+st.write(datos_filtrados)
 
 st.markdown('<br>', unsafe_allow_html=True) 
 
 # Gráfico de barras para las ventas por categoría
 st.subheader('Ventas por Categoría')
-category_sales = filtered_data.groupby('Category')['Sales'].sum()
-st.bar_chart(category_sales)
+ventas_por_categoria = datos_filtrados.groupby('Category')['Sales'].sum()
+st.bar_chart(ventas_por_categoria)
 
 # Gráfico de Torta para la Distribución de Categorías
 st.subheader('Distribución de Categorías')
-category_distribution = data['Category'].value_counts()
-fig = px.pie(category_distribution, labels=category_distribution.index,
-             values=category_distribution.values, title='Distribución de Categorías',
-             hole=0.3, names=category_distribution.index)
-st.plotly_chart(fig)
+distribucion_categorias = datos['Category'].value_counts()
+figura_torta = px.pie(distribucion_categorias, labels=distribucion_categorias.index,
+                     values=distribucion_categorias.values, title='Distribución de Categorías',
+                     hole=0.3, names=distribucion_categorias.index)
+st.plotly_chart(figura_torta)
 
 st.markdown('<br>', unsafe_allow_html=True) 
 
 # Gráfico de barras para las ventas por estado
 st.subheader('Ventas por Estado')
-state_sales = filtered_data.groupby('State')['Sales'].sum()
-st.bar_chart(state_sales)
+ventas_por_estado = datos_filtrados.groupby('State')['Sales'].sum()
+st.bar_chart(ventas_por_estado)
 
 st.markdown('<br>', unsafe_allow_html=True) 
 
 # Gráfico de barras para las ventas por manager
-st.subheader('Ventas por Manager')
-manager_sales = filtered_data.groupby('Manager')['Sales'].sum()
-st.bar_chart(manager_sales)
-
-
-
-
+st.subheader('Ventas por Gerente')
+ventas_por_gerente = datos_filtrados.groupby('Manager')['Sales'].sum()
+st.bar_chart(ventas_por_gerente)
