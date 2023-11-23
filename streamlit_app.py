@@ -5,13 +5,14 @@ import openpyxl
 
 data = pd.read_excel('fashionsales.xlsx', engine='openpyxl')
 
-# Configuración del título y la descripción
-st.title('Datos de Ventas de ropa en Australia')
-st.write('Este es un dashboard para analizar datos de ventas para la ayuda de toma de decisiones.')
+
+
 
 icon_url = 'icono.jpg'  # Reemplaza 'URL_DEL_ICONO' con la URL de la imagen del icono
 st.image(icon_url, width=100) 
+st.title('Datos de Ventas de ropa en Australia')
 
+st.write('Este es un dashboard para analizar datos de ventas para la ayuda de toma de decisiones.')
 
 # Filtrar los datos por mes
 selected_month = st.selectbox('Seleccionar mes:', data['Month'].unique())
