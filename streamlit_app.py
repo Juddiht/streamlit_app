@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import openpyxl
-
+import plotly.express as px
 
 data = pd.read_excel('fashionsales.xlsx', engine='openpyxl')
 
@@ -42,10 +42,13 @@ st.subheader('Ventas por Categoría')
 category_sales = filtered_data.groupby('Category')['Sales'].sum()
 st.bar_chart(category_sales)
 
-#Grafico de torta para saber las proporciones de ventas por categorías
+# Gráfico de Torta para la Distribución de Categorías
 st.subheader('Distribución de Categorías')
 category_distribution = data['Category'].value_counts()
-st.pie(category_distribution, labels=category_distribution.index, autopct='%1.1f%%', startangle=90)
+fig = px.pie(category_distribution, labels=category_distribution.index, values=category_distribution.values,
+             title='Distribución de Categorías', hole=0.3)
+st.plotly_chart(fig)
+
 
 st.markdown('<br>', unsafe_allow_html=True) 
 
