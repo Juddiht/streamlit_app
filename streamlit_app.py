@@ -35,15 +35,26 @@ filtered_data = data[data['Month'] == selected_month]
 st.write(f'Datos para el mes seleccionado: {selected_month}')
 st.write(filtered_data)
 
+st.markdown('<br>', unsafe_allow_html=True) 
+
 # Gráfico de barras para las ventas por categoría
 st.subheader('Ventas por Categoría')
 category_sales = filtered_data.groupby('Category')['Sales'].sum()
 st.bar_chart(category_sales)
 
+#Grafico de torta para saber las proporciones de ventas por categorías
+st.subheader('Distribución de Categorías')
+category_distribution = data['Category'].value_counts()
+st.pie(category_distribution, labels=category_distribution.index, autopct='%1.1f%%', startangle=90)
+
+st.markdown('<br>', unsafe_allow_html=True) 
+
 # Gráfico de barras para las ventas por estado
 st.subheader('Ventas por Estado')
 state_sales = filtered_data.groupby('State')['Sales'].sum()
 st.bar_chart(state_sales)
+
+st.markdown('<br>', unsafe_allow_html=True) 
 
 # Gráfico de barras para las ventas por manager
 st.subheader('Ventas por Manager')
