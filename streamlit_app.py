@@ -10,7 +10,7 @@ data = pd.read_excel('fashionsales.xlsx', engine='openpyxl')
 
 icon_url = 'icono.jpg'  # Reemplaza 'URL_DEL_ICONO' con la URL de la imagen del icono
 st.image(icon_url, width=100) 
-st.title('Datos de Ventas de ropa en Australia')
+st.title('Reporte de Ventas de Ropas y accesorios')
 
 st.write('Este es un dashboard para analizar datos de ventas para la ayuda de toma de decisiones.')
 
