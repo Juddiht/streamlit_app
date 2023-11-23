@@ -2,25 +2,29 @@ import streamlit as st
 import pandas as pd
 import openpyxl
 
-
+# Cargar los datos
 data = pd.read_excel('fashionsales.xlsx', engine='openpyxl')
 
 # Configuración del título y la descripción
-st.title('Datos de Ventas de ropa en Australia')
+st.title('Datos de Ventas de Ropa en Australia')
 st.write('Este es un dashboard simple para analizar datos de ventas para la ayuda de toma de decisiones.')
 
 # Filtrar los datos por mes
 selected_month = st.selectbox('Seleccionar mes:', data['Month'].unique())
 filtered_data = data[data['Month'] == selected_month]
 
-# Mostrar los datos filtrados
-st.write(f'Datos para el mes seleccionado: {selected_month}')
-st.write(filtered_data)
-
 # Gráfico de barras para las ventas por categoría
-st.subheader('Ventas por Categoría')
+st.subheader(f'Ventas por Categoría para {selected_month}')
 category_sales = filtered_data.groupby('Category')['Sales'].sum()
 st.bar_chart(category_sales)
+
+# Estadísticas descriptivas
+st.subheader('Estadísticas Descriptivas de Ventas')
+st.write(filtered_data['Sales'].describe())
+
+# Mostrar los datos filtrados
+st.subheader(f'Datos para {selected_month}')
+st.write(filtered_data)
 
 # Gráfico de barras para las ventas por estado
 st.subheader('Ventas por Estado')
@@ -41,8 +45,3 @@ st.line_chart(time_series_data)
 st.subheader('Resumen de Ventas')
 summary = data.groupby(['Month', 'Category'])['Sales'].sum().unstack()
 st.dataframe(summary)
-
-
-
-
-
