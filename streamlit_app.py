@@ -9,6 +9,11 @@ data = pd.read_excel('fashionsales.xlsx', engine='openpyxl')
 st.title('Datos de Ventas de Ropa en Australia')
 st.write('Este es un dashboard simple para analizar datos de ventas para la ayuda de toma de decisiones.')
 
+
+# Estadísticas descriptivas
+st.subheader('Estadísticas de Ventas')
+st.write(filtered_data['Sales'].describe())
+
 # Filtrar los datos por mes
 selected_month = st.selectbox('Seleccionar mes:', data['Month'].dt.to_period('M').unique())
 filtered_data = data[data['Month'].dt.to_period('M') == selected_month]
@@ -18,9 +23,6 @@ st.subheader(f'Ventas por Categoría para {selected_month}')
 category_sales = filtered_data.groupby('Category')['Sales'].sum()
 st.bar_chart(category_sales)
 
-# Estadísticas descriptivas
-st.subheader('Estadísticas Descriptivas de Ventas')
-st.write(filtered_data['Sales'].describe())
 
 # Mostrar los datos filtrados
 st.subheader(f'Datos para {selected_month}')
