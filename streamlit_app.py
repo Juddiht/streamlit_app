@@ -45,10 +45,10 @@ st.bar_chart(category_sales)
 # Gráfico de Torta para la Distribución de Categorías
 st.subheader('Distribución de Categorías')
 category_distribution = data['Category'].value_counts()
-fig = px.pie(category_distribution, labels=category_distribution.index, values=category_distribution.values,
-             title='Distribución de Categorías', hole=0.3)
+fig = px.pie(category_distribution, labels=category_distribution.index,
+             values=category_distribution.values, title='Distribución de Categorías',
+             hole=0.3, names=category_distribution.index)
 st.plotly_chart(fig)
-
 
 st.markdown('<br>', unsafe_allow_html=True) 
 
